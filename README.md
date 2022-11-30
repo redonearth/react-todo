@@ -12,5 +12,8 @@
 
 ## 도구
 
-- CSS Module(PostCSS)
+- React 18 (Create React App)
+- 스타일: CSS Module (PostCSS)
+- 패키지 매니저: Yarn Berry
+- ESLint, Prettier
 - [Pretendard 폰트](https://github.com/orioncactus/pretendard)
