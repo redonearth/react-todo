@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AddToDo from '../AddToDo/AddToDo';
+import ToDo from '../ToDo/ToDo';
 
 export default function ToDoList({}) {
   const [toDos, setToDos] = useState(initialToDos);
@@ -10,11 +11,22 @@ export default function ToDoList({}) {
       ...prev,
     ]);
 
+  const handleUpdate = (updated) =>
+    setToDos(toDos.map((toDo) => (toDo.id === updated.id ? updated : toDo)));
+
+  const handleDelete = (deleted) =>
+    setToDos(toDos.filter((toDo) => toDo.id !== deleted.id));
+
   return (
     <section>
       <ul>
         {toDos.map((toDo) => (
-          <li key={toDo.id}>{toDo.content}</li>
+          <ToDo
+            key={toDo.id}
+            toDo={toDo}
+            onUpdate={handleUpdate}
+            onDelete={handleDelete}
+          />
         ))}
       </ul>
       <AddToDo onAdd={handleAdd} />
