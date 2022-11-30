@@ -12,7 +12,7 @@ export default function AddToDo({ onAdd }) {
       setContent('');
       return;
     }
-    onAdd({ content });
+    onAdd({ content: content.replace(/^\s+|\s+$/g, '') });
     setContent('');
   };
 
