@@ -2,11 +2,11 @@ import React from 'react';
 import { IoTrashBinSharp } from 'react-icons/io5';
 
 export default function ToDo({ toDo, onUpdate, onDelete }) {
-  const { content, isDone } = toDo;
+  const { content, status } = toDo;
 
   const handleChange = (e) => {
-    const isDone = e.target.checked ? true : false;
-    onUpdate({ ...toDo, isDone });
+    const status = e.target.checked ? 'done' : 'active';
+    onUpdate({ ...toDo, status });
   };
 
   const handleDelete = () => onDelete(toDo);
@@ -16,7 +16,7 @@ export default function ToDo({ toDo, onUpdate, onDelete }) {
       <input
         type="checkbox"
         id="checkbox"
-        checked={isDone}
+        checked={status === 'done'}
         onChange={handleChange}
       />
       <label htmlFor="checkbox">{content}</label>

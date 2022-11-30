@@ -4,12 +4,12 @@ import ToDo from '../ToDo/ToDo';
 
 const TODOS = 'toDos';
 
-export default function ToDoList() {
+export default function ToDoList({ filter }) {
   const [toDos, setToDos] = useState(getToDosFromLocalStorage);
 
   const handleAdd = (toDo) =>
     setToDos((prev) => [
-      { id: prev.length + 1, content: toDo.content, isDone: false },
+      { id: prev.length + 1, content: toDo.content, status: 'active' },
       ...prev,
     ]);
 
@@ -23,10 +23,12 @@ export default function ToDoList() {
     localStorage.setItem(TODOS, JSON.stringify(toDos));
   }, [toDos]);
 
+  const filtered = getFilteredItems(toDos, filter);
+
   return (
     <section>
       <ul>
-        {toDos.map((toDo) => (
+        {filtered.map((toDo) => (
           <ToDo
             key={toDo.id}
             toDo={toDo}
@@ -38,6 +40,13 @@ export default function ToDoList() {
       <AddToDo onAdd={handleAdd} />
     </section>
   );
+}
+
+function getFilteredItems(toDos, filter) {
+  if (filter === 'all') {
+    return toDos;
+  }
+  return toDos.filter((toDo) => toDo.status === filter);
 }
 
 function getToDosFromLocalStorage() {
