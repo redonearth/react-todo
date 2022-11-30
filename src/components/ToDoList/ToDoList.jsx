@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AddToDo from '../AddToDo/AddToDo';
 import ToDo from '../ToDo/ToDo';
 
-export default function ToDoList({}) {
-  const [toDos, setToDos] = useState(initialToDos);
+const TODOS = 'toDos';
+
+export default function ToDoList() {
+  const [toDos, setToDos] = useState(getToDosFromLocalStorage);
 
   const handleAdd = (toDo) =>
     setToDos((prev) => [
@@ -16,6 +18,10 @@ export default function ToDoList({}) {
 
   const handleDelete = (deleted) =>
     setToDos(toDos.filter((toDo) => toDo.id !== deleted.id));
+
+  useEffect(() => {
+    localStorage.setItem(TODOS, JSON.stringify(toDos));
+  }, [toDos]);
 
   return (
     <section>
@@ -34,7 +40,7 @@ export default function ToDoList({}) {
   );
 }
 
-const initialToDos = [
-  { id: 1, content: '강의 보기', isDone: false },
-  { id: 2, content: '청소하기', isDone: false },
-];
+function getToDosFromLocalStorage() {
+  const toDos = localStorage.getItem(TODOS);
+  return toDos ? JSON.parse(toDos) : [];
+}
